@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+message ValueData {
+    string data = 1; // Original field
+    // Adding new fields later, e.g., int32 timestamp = 2;
+    // This demonstrates schema evolution: old clients can still read data
+    // even if new fields are added, and new clients will use defaults
+    // if new fields are missing from old data.
+}
+
+message KeyValue {
+    string key = 1;
+    ValueData value = 2;
+}
