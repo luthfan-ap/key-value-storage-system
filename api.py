@@ -1,15 +1,18 @@
 from typing import Dict, List
 from .partitioning.sharder import Sharder
-from .replication.replica_manager import ReplicaManager
-from .storage_engine.encoding_pb2 import ValueData
+from .replication.replication_manager import ReplicationManager # Pastikan ini ReplicationManager
+from .storage_engine.encoding_pb2 import ValueData #type:ignore
+
+from .storage_engine.cold_storage import COLD_STORAGE_DIR
 
 class KeyValueStore:
     def __init__(self, num_shards: int = 4): # Example: 4 shards
         self.num_shards = num_shards
         self.sharder = Sharder(num_shards)
-        # Each shard will have its own ReplicaManager instance
-        self.shards: Dict[int, ReplicaManager] = {
-            i: ReplicaManager(shard_id=i, total_shards=num_shards) for i in range(num_shards)
+
+        self.shards: Dict[int, ReplicationManager] = {
+            i: ReplicationManager(shard_id=i, total_shards=num_shards, base_cold_dir=COLD_STORAGE_DIR)
+            for i in range(num_shards)
         }
 
     def put(self, key: str, value: str):

@@ -1,7 +1,14 @@
 import os
-from .encoding_pb2 import KeyValue, ValueData
+from .encoding_pb2 import KeyValue, ValueData #type:ignore
 
-COLD_STORAGE_DIR = "cold_data"
+_CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
+print(f"[DEBUG PATH] _CURRENT_DIR: {_CURRENT_DIR}")
+
+PROJECT_ROOT = os.path.normpath(os.path.join(_CURRENT_DIR, "..")) # Tambahkan os.path.normpath
+print(f"[DEBUG PATH] PROJECT_ROOT (normalized): {PROJECT_ROOT}")
+
+COLD_STORAGE_DIR = os.path.join(PROJECT_ROOT, "cold_data")
+print(f"[DEBUG PATH] COLD_STORAGE_DIR (final): {COLD_STORAGE_DIR}")
 
 class ColdStorage:
     def __init__(self, storage_dir: str = COLD_STORAGE_DIR):

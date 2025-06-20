@@ -1,12 +1,12 @@
 # main.py
-from api import KeyValueStore
+from .api import KeyValueStore
 import time
 
 if __name__ == "__main__":
     store = KeyValueStore(num_shards=2) # Start with 2 shards for testing
 
     print("--- PUT Operations ---")
-    store.put("name", "Lutan")
+    store.put("name", "Luthfan")
     store.put("city", "Surabaya")
     store.put("age", "30")
     store.put("occupation", "Engineer")

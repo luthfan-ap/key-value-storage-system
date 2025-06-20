@@ -1,9 +1,9 @@
 from typing import List, Dict
 from ..storage_engine.hot_storage import HotStorage
 from ..storage_engine.cold_storage import ColdStorage
-from ..storage_engine.encoding_pb2 import ValueData
+from ..storage_engine.encoding_pb2 import ValueData #type:ignore
 
-class ReplicaManager:
+class ReplicationManager:
     def __init__(self, shard_id: int, total_shards: int, base_cold_dir: str = "cold_data"):
         self.shard_id = shard_id
         self.total_shards = total_shards
