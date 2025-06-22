@@ -11,18 +11,17 @@ class ReplicationManager:
         # Each replica will have its own cold storage directory
         self.cold_storage = ColdStorage(f"{base_cold_dir}/shard_{shard_id}_replica_0")
         self.replica_cold_storage = ColdStorage(f"{base_cold_dir}/shard_{shard_id}_replica_1")
-        # In a real system, replica_cold_storage would be on a different node/machine
 
     def put_data(self, key: str, value_data_pb2: ValueData):
         # Write to primary hot storage
         self.hot_storage.put(key, value_data_pb2)
+        
         # Write to primary cold storage
-        self.cold_storage.put(key, value_data_pb2)
+        # self.cold_storage.put(key, value_data_pb2)
 
         # Synchronous replication to the second replica
-        # In a real distributed system, this would be a network call to another node
-        self.replica_cold_storage.put(key, value_data_pb2)
-        print(f"Shard {self.shard_id}: Key '{key}' replicated to primary and secondary cold storage.")
+        # self.replica_cold_storage.put(key, value_data_pb2)
+        # print(f"Shard {self.shard_id}: Key '{key}' replicated to primary and secondary cold storage.")
 
     def get_data(self, key: str):
         # Try hot storage first
@@ -63,4 +62,5 @@ class ReplicationManager:
             if value:
                 self.cold_storage.put(key, value)
                 self.replica_cold_storage.put(key, value)
+                self.hot_storage.remove(key)
         print(f"Shard {self.shard_id}: All hot data flushed to cold storage.")

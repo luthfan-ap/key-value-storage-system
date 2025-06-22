@@ -1,41 +1,39 @@
-# main.py
 from .api import KeyValueStore
 import time
+import sys
 
 if __name__ == "__main__":
-    store = KeyValueStore(num_shards=2) # Start with 2 shards for testing
+    store = KeyValueStore(num_shards=2)
 
-    print("--- PUT Operations ---")
-    store.put("name", "Luthfan")
-    store.put("city", "Surabaya")
-    store.put("age", "30")
-    store.put("occupation", "Engineer")
-    store.put("hobby", "Reading")
-    store.put("country", "Indonesia")
+    # Mode operasi CLI
+    print("== Key-Value Storage System ==")
+    print("1. Input data (Usage: PUT <key> <value>)")
+    print("2. Get data (Usage: GET <key>)\n")
+    while True:
+        user_input = input("> ").strip()
+        parts = user_input.split(maxsplit=2)
 
-    print("\n--- GET Operations ---")
-    print(f"Get 'name': {store.get('name')}")
-    print(f"Get 'city': {store.get('city')}")
-    print(f"Get 'non_existent_key': {store.get('non_existent_key')}")
-    print(f"Get 'age': {store.get('age')}")
+        statement = parts[0].upper() # first argument, (PUT / GET)
 
-    # Demonstrate schema evolution by adding a new field (conceptually)
-    # First, modify data_encoding.proto:
-    # message ValueData {
-    #     string data = 1;
-    #     int32 timestamp = 2; // New field
-    # }
-    # Then re-run: protoc --python_out=./storage_engine storage_engine/data_encoding.proto
-    # And update how you create ValueData:
-    # value_data_pb2 = ValueData(data=value, timestamp=int(time.time()))
-
-    print("\n--- Testing Data Hot/Cold Movement (Conceptual) ---")
-    # In a real scenario, you'd have a background thread or a more complex policy
-    # to decide when to move data to cold storage.
-    # For this example, let's manually trigger a move for one key.
-    shard_id_for_hobby = store.sharder.get_shard_id("hobby")
-    store.shards[shard_id_for_hobby].move_to_cold("hobby")
-    print(f"Get 'hobby' after potential move: {store.get('hobby')}") # Should still be retrievable from cold
-
-    print("\n--- Shutting down store (flushing hot data) ---")
-    store.shutdown()
+        if statement == "PUT":
+            if len(parts) >= 3: # argument template: python -m ... PUT <key> <value>
+                key = parts[1] # second argument, key
+                
+                value = " ".join(parts[2:])
+                store.put(key, value)
+                print(f"PUT command executed for key: '{key}'")
+            else:
+                print("Usage: PUT <key> <value>")
+        elif statement == "GET":
+            if len(parts) == 2:
+                key = parts[1]
+                result = store.get(key)
+                print(f"Result for '{key}': {result}")
+            else:
+                print("Usage: GET <key>")
+        elif statement == ".QUIT": # if done, do a .quit to shutdown the storage system
+            print("\n--- Shutting down store (flushing hot data) ---")
+            store.shutdown()
+            break
+        else:
+            print(f"Error: Unknown command '{statement}'. Use PUT or GET.")

@@ -6,7 +6,7 @@ from .storage_engine.encoding_pb2 import ValueData #type:ignore
 from .storage_engine.cold_storage import COLD_STORAGE_DIR
 
 class KeyValueStore:
-    def __init__(self, num_shards: int = 4): # Example: 4 shards
+    def __init__(self, num_shards: int = 2): # Example: 4 shards
         self.num_shards = num_shards
         self.sharder = Sharder(num_shards)
 
@@ -17,7 +17,7 @@ class KeyValueStore:
 
     def put(self, key: str, value: str):
         shard_id = self.sharder.get_shard_id(key)
-        value_data_pb2 = ValueData(data=value) # Create protobuf message
+        value_data_pb2 = ValueData(data=value)
         self.shards[shard_id].put_data(key, value_data_pb2)
         print(f"PUT: Key '{key}' mapped to shard {shard_id}")
 

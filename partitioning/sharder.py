@@ -1,4 +1,3 @@
-# partitioning/sharder.py
 class Sharder:
     def __init__(self, num_shards: int):
         self.num_shards = num_shards
