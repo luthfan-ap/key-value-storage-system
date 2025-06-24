@@ -2,6 +2,7 @@ syntax = "proto3";
 
 message ValueData {
     string data = 1; // Original field
+    int32 number = 2;
     // Adding new fields later, e.g., int32 timestamp = 2;
 }
 

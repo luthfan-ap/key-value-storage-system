@@ -13,15 +13,15 @@ _sym_db = _symbol_database.Default()
 
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x0e\x65ncoding.proto\"\x19\n\tValueData\x12\x0c\n\x04\x64\x61ta\x18\x01 \x01(\t\"2\n\x08KeyValue\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\x19\n\x05value\x18\x02 \x01(\x0b\x32\n.ValueDatab\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x0e\x65ncoding.proto\")\n\tValueData\x12\x0c\n\x04\x64\x61ta\x18\x01 \x01(\t\x12\x0e\n\x06number\x18\x02 \x01(\x05\"2\n\x08KeyValue\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\x19\n\x05value\x18\x02 \x01(\x0b\x32\n.ValueDatab\x06proto3')
 
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, globals())
 _builder.BuildTopDescriptorsAndMessages(DESCRIPTOR, 'encoding_pb2', globals())
 if _descriptor._USE_C_DESCRIPTORS == False:
 
   DESCRIPTOR._options = None
-  _VALUEDATA._serialized_start=18  # type: ignore
-  _VALUEDATA._serialized_end=43    # type: ignore
-  _KEYVALUE._serialized_start=45   # type: ignore
-  _KEYVALUE._serialized_end=95     # type: ignore
+  _VALUEDATA._serialized_start=18 # type: ignore
+  _VALUEDATA._serialized_end=59 # type: ignore
+  _KEYVALUE._serialized_start=61 # type: ignore
+  _KEYVALUE._serialized_end=111 # type: ignore
 # @@protoc_insertion_point(module_scope)
