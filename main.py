@@ -74,7 +74,6 @@ def run_interactive_mode(store: KeyValueStore):
 # ====================================================================================
 
 if __name__ == "__main__":
-    # Anda bisa mengatur jumlah shard di sini, misalnya 2 atau 4
     store = KeyValueStore(num_shards=2)
 
     if len(sys.argv) > 1: # Jika ada argumen CLI yang diberikan

@@ -9,12 +9,13 @@ class KeyValueStore:
     def __init__(self, num_shards: int = 2):
         self.num_shards = num_shards
         self.sharder = Sharder(num_shards)
-        # Setiap shard akan memiliki instance ReplicaManager-nya sendiri
+        
+        # each shards will have its own replicamanager
         self.shards: Dict[int, ReplicationManager] = {
             i: ReplicationManager(
                 shard_id=i,
                 total_shards=num_shards,
-                base_cold_dir=BASE_COLD_STORAGE_ROOT_DIR # Teruskan path cold storage yang sudah dihitung
+                base_cold_dir=BASE_COLD_STORAGE_ROOT_DIR
             )
             for i in range(num_shards)
         }
