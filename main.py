@@ -261,6 +261,6 @@ if __name__ == "__main__":
     else: # Jika tidak ada argumen CLI, masuk mode interaktif
         run_interactive_mode(store)
 
-    # Bagian shutdown ini akan selalu dijalaiakan di akhir eksekusi program
+    # Bagian shutdown ini akan selalu dijalankan di akhir eksekusi program
     logging.info("\n--- Shutting down store (flushing hot data) ---")
     store.shutdown()
