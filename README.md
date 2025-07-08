@@ -136,7 +136,7 @@ key-value-storage-system/
 
 ### PUT Workflow
 1. User runs (via CLI):
-    ```
+    ```bash
     PUT <key> <value>
     ```
 2. `main.py` calls `KeyValueStore.put(key,value)`
@@ -148,7 +148,7 @@ key-value-storage-system/
 
 ### GET Workflow
 1. User runs:
-    ```
+    ```bash
     GET <key>
     ```
 2. `main.py` calls `KeyValueStore.get(key)`
@@ -159,6 +159,14 @@ key-value-storage-system/
     - If not found, then from __primary ColdStorage__ (disk)
     - If not found, from __replica ColdStorage__ (disk)
 6. If found in cold storage, the value is promoted to hot storage for faster future access.
+
+### Flushing / Shutdown
+- On system shutdown using:
+    ```bash
+    .quit
+    ```
+ `KeyValueStore.shutdown()` is called.
+- Each `ReplicationManager` flushes all hot data to both cold storage replicas for persistence and fault tolerance.
 
 
 ## Limitations
